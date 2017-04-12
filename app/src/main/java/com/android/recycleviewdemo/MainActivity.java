@@ -1,5 +1,7 @@
 package com.android.recycleviewdemo;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // transparent status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            // View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 隐藏虚拟按键
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_LAYOUT_FLAGS);
+            window.getDecorView().setFitsSystemWindows(true);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
         setContentView(R.layout.activity_main);
         initData();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -63,25 +75,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                AddData(1); // 1为数据所对定的下标
-                break;
-            case R.id.action_delete:
-                DaleteData(1);
-                break;
-
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_add:
+//                AddData(1); // 1为数据所对定的下标
+//                break;
+//            case R.id.action_delete:
+//                DaleteData(1);
+//                break;
+//
+//        }
+//        return true;
+//    }
 
     // 增加数据 position为数据所对应下标
     public void AddData(int position) {
